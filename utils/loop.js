@@ -1,4 +1,4 @@
-import { itemsCall, langLinks } from './call';
+const { itemsCall, langLinks } = require('./call');
 
 exports.getItemLoop = async(token, hubId) => {
   let url = `https://v2.api.uberflip.com/hubs/${hubId}/items?limit=100`;
@@ -10,7 +10,7 @@ do{
     let res = await itemsCall(token, url);
     totalPages = res.meta.total_pages;
     page++;
-    url = url + `?page=${page}`;
+    url = res.meta.next_page;
     console.log(`called: page ${page} of ${totalPages}`);
     array = array.concat(res.data);
     console.log(`array length: ${array.length}`);
